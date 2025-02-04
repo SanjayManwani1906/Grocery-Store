@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/style.css" rel="stylesheet" />
+  <link rel="icon" type="image/ico" href="/static/logo.png">
+  <title>Cart</title>
+</head>
+
+<body>
+
+  <div align="center">
+
+
+    <div
+    style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+    <div style="display: flex;justify-content: center;align-items: center;">
+
+      <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+        <img src="/static/logo.png" width="70px" height="70px">
+      </div>
+      <a href="/best_selling_products">
+        <div style="width: 280px;margin-right: 10px;margin-left: 10px;">
+          <img src="/static/gifs/D80650255_1242x350_A.gif" width="100%" height="auto" style="border-radius: 10px;">
+        </div>
+      </a>
+
+      <a href="/home/user" class="btn">Home</a>
+      <a  class="active_btn">Cart</a>
+      <a href="/user/account" class="btn">Account</a>
+
+      <form action="#" method="POST" style="margin-left: 10px;">
+        <div
+          style="display: flex;justify-content: center;align-items: center;background: rgba(0, 0, 0, 0.2);border: 1.5px solid white;border-radius: 10px;">
+          <img src="/static/icons/search.png" width="20px" height="20px" style="margin: 5px;">
+          <input type="text" autocomplete="off" name="search_keyword" placeholder="Search for groceries"
+            style="margin: 0px;border: none;background: none;text-align: left;outline: none;margin: 2px;border-radius: none;"
+            required>
+        </div>
+      </form>
+    </div>
+
+    <div style="display: flex;justify-content: center;align-items: center;">
+      <h2 style="margin-right: 15px;">{{user.Name}}</h2>
+      <a href="/logout" class="btn" style="border:solid 1px white">Log-Out</a>
+    </div>
+  </div>
+  <br>
+    <h2 style="margin-top: 0px;">{{user.Name}}'s Cart</h2>
+
+    <table class="table" cellspacing="0" cellpadding="0">
+      <tr>
+        <th></th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+      {% for items in cart_items %}
+      <tr>
+        <td style="width:60px">
+          <img class="cart_image" src={{items[1].Image}}>
+        </td>
+        <td>{{ items[1].Name }}</td>
+        <td>{{ items[0].ProductQuantity }}</td>
+        <td>{{ items[1].Units }} </td>
+        <td>{{ items[0].TotalAmount }} </td>
+        <td> 
+          <a href="/removefromcart/{{items[1].Id}}" class="btn">Remove One</a>
+          <a href="/removeallfromcart/{{items[1].Id}}" class="btn">Remove All</a>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </table> 
+
+    <br>
+    <div class="total">
+      <h3>Grand Total: Rs. {{grand_total}}</h3>
+      {% if cart_items|length > 0 %}
+      <a href="/checkout/{{user.Id}}" class="checkout_btn">
+        <b>Check Out</b>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+</body>
+
+</html>

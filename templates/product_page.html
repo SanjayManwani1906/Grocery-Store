@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Page</title>
+    <link href="/static/style.css" rel="stylesheet" />
+    <link rel="icon" type="image/ico" href="/static/logo.png">
+</head>
+
+<body>
+
+    <div align="center">
+
+        <div
+            style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+            <div style="display: flex;justify-content: center;align-items: center;">
+
+                <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+                    <img src="/static/logo.png" width="70px" height="70px">
+                </div>
+                <a href="/best_selling_products">
+                    <div style="width: 280px;margin-right: 10px;margin-left: 10px;">
+                        <img src="/static/gifs/D80650255_1242x350_A.gif" width="100%" height="auto"
+                            style="border-radius: 10px;">
+                    </div>
+                </a>
+
+                <a href="/home/user" class="btn">Home</a>
+                <a href="/cart" class="btn">Cart</a>
+                <a class="active_btn">Account</a>
+
+                <form action="#" method="POST" style="margin-left: 10px;">
+                    <div
+                        style="display: flex;justify-content: center;align-items: center;background: rgba(0, 0, 0, 0.2);border: 1.5px solid white;border-radius: 10px;">
+                        <img src="/static/icons/search.png" width="20px" height="20px" style="margin: 5px;">
+                        <input type="text" autocomplete="off" name="search_keyword" placeholder="Search for groceries"
+                            style="margin: 0px;border: none;background: none;text-align: left;outline: none;margin: 2px;border-radius: none;"
+                            required>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <h2 style="margin-right: 15px;">{{user.Name}}</h2>
+                <a href="/logout" class="btn" style="border:solid 1px white">Log-Out</a>
+            </div>
+        </div>
+        <br>
+
+        <h2>Other Categories</h2>
+        <div style="display: flex;align-items: center;justify-content: center;">
+            <div
+                style="display: flex;flex-direction: row;align-items: center;justify-content: start;overflow-x: auto;overflow-y: hidden;">
+                {% for other_category in categories %}
+                {% if other_category.Name == category.Name %}
+                <div>
+                    <a href="/product/page/{{other_category.Id}}">
+                        <div style="margin: 10px;">
+                            <img src="{{other_category.Image}}" class="cart_image"
+                                style="width: 70px;height: 70px;border: 5px rgb(36, 96, 75) solid;">
+                            <br>
+                            <span
+                                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{other_category.Name}}</span>
+                        </div>
+                    </a>
+                </div>
+                {% else %}
+                <div>
+                    <a href="/product/page/{{other_category.Id}}">
+                        <div style="margin: 10px;">
+                            <img src="{{other_category.Image}}" class="cart_image"
+                                style="width: 70px;height: 70px;border: 2px white solid;">
+                            <br>
+                            <span
+                                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{other_category.Name}}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="background-image: url({{category.Image}});" class="category_banner">
+            <div>
+                <h2>{{category.Name}}</h2>
+            </div>
+        </div>
+
+        {%for message in get_flashed_messages()%}
+        <div class="alert">
+            <span>{{message}}</span>
+        </div>
+        {%endfor%}
+
+
+        <div class="container">
+            {% for product in products %}
+            <table class="item">
+                <tr>
+                    <td>
+                        {{product.Name}}
+                        <div>
+                            {{product.Price}}
+                            {{product.Units}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="imagecontainer">
+                        <a>
+                            <div class="image" style="background-image:url('{{product.Image}}');">
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="display: flex;align-items: center;justify-content: space-between;">
+                            <a href="/addtocart/{{product.Id}}" style="margin: 7px;">
+                                <img src="/static/icons/cart.png" width="22px" height="22px">
+                            </a>
+                            <a href="/buy/{{product.Id}}" class="buy_btn">Buy Now</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+
+            {% for product in out_of_stock_products %}
+            <table class="item" style="background-color: grey;">
+                <tr>
+                    <td>
+                        {{product.Name}}
+                        <div>
+                            {{product.Price}}
+                            {{product.Units}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="imagecontainer">
+                        <a>
+                            <div class="image" style="background-image:url('{{product.Image}}');">
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 12px;padding-bottom: 12px;">
+                        Out of Stock
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <br>
+</body>
+
+</html>

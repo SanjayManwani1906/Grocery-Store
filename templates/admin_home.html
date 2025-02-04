@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width">
+  <title>Admin Home</title>
+  <link href="/static/style.css" rel="stylesheet" />
+  <link rel="icon" type="image/ico" href="/static/logo.png">
+</head>
+
+<body>
+
+  <div align="center">
+    <div
+      style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+      <div style="display: flex;justify-content: center;align-items: center;">
+
+        <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+          <img src="/static/logo.png" width="70px" height="70px">
+        </div>
+
+       <a class="active_btn">Home</a>
+       <a href="/admin/account" class="btn">Account</a>
+      </div>
+
+      <a href="/adminlogout" class="btn" style="border:solid 1px white">Log-Out</a>
+
+    </div>
+    <br>
+
+    <div align="center">
+      <h2 style="margin-top: 0px;">Categories</h2>
+
+      <div class="container">
+        {% for category in categories %}
+
+        <table class="item">
+          <tr>
+            <td>
+              {{category.Name}}
+            </td>
+          </tr>
+          <tr>
+            <td class="imagecontainer">
+              <a href="/category/page/{{category.Id}}">
+                <div class="image" style="background-image:url('{{category.Image}}');">
+                </div>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display: flex;align-items: center;justify-content: space-between;">
+                <a href="/edit/category/{{category.Id}}" style="margin-left: 15px;padding: 5px;">
+                  <img src="/static/icons/edit.png" width="22px" height="22px">
+                </a>
+                <a href="/delete/category/{{category.Id}}"
+                  onclick="return confirm('Are you sure, you want to DELETE {{category.Name}} ? \nThis action will also delete all the products in this category.')"
+                  style="margin-right: 15px;padding: 5px;">
+                  <img src="/static/icons/bin.png" width="18px" height="22px">
+                </a>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        {% endfor %}
+
+        <a href="/create/category">
+          <div style="margin: 15px;">
+            <img src="/static/icons/plus.png" width="80px" height="80px">
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <br>
+    <br>
+    
+
+</body>
+
+</html>

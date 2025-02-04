@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/style.css" rel="stylesheet" />
+    <link rel="icon" type="image/ico" href="/static/logo.png">
+    <title>edit Product</title>
+</head>
+
+<body>
+    <div align='center'>
+
+        <div
+            style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+            <div style="display: flex;justify-content: center;align-items: center;">
+
+                <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+                    <img src="/static/logo.png" width="70px" height="70px">
+                </div>
+
+                <a href="/home/admin" class="btn">Home</a>
+                <a href="/admin/account" class="btn">Account</a>
+            </div>
+            <a href="/adminlogout" class="btn" style="border:solid 1px white">Log-Out</a>
+        </div>
+
+        <h2>Other Categories</h2>
+        <div style="display: flex;align-items: center;justify-content: center;">
+            <div
+                style="display: flex;flex-direction: row;align-items: center;justify-content: start;overflow-x: auto;overflow-y: hidden;">
+                {% for other_category in categories %}
+                {% if other_category.Name == category.Name %}
+                <div>
+                    <a href="/category/page/{{other_category.Id}}">
+                        <div style="margin: 10px;">
+                            <img src="{{other_category.Image}}" class="cart_image"
+                                style="width: 70px;height: 70px;border: 5px rgb(36, 96, 75) solid;">
+                            <br>
+                            <span
+                                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{other_category.Name}}</span>
+                        </div>
+                    </a>
+                </div>
+                {% else %}
+                <div>
+                    <a href="/category/page/{{other_category.Id}}">
+                        <div style="margin: 10px;">
+                            <img src="{{other_category.Image}}" class="cart_image"
+                                style="width: 70px;height: 70px;border: 2px white solid;">
+                            <br>
+                            <span
+                                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{other_category.Name}}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div align='center'>
+            <form action="#" autocomplete="off" enctype="multipart/form-data" method="POST" class="form">
+                <h2 style="margin-top: 0px;">Edit {{product.Name}}</h2>
+                <label>Name</label>
+                <br>
+                <input type='text' value="{{product.Name}}" name="product_name" required></input>
+                <br>
+                <br>
+                <label>Category</label>
+                <br>
+                <select name="product_category" id="product_category">
+                    {% for category in categories %}
+                    {% if product.CategoryName == category.Name %}
+                    <option selected value="{{category.Name}}">{{category.Name}}</option>
+                    {% else %}
+                    <option value="{{category.Name}}">{{category.Name}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
+                <br>
+                <label>Price</label>
+                <br>
+                <input type='number' value="{{product.Price}}" name="product_price" required></input>
+                <br>
+                <br>
+                <label>Quantity</label>
+                <br>
+                <input type='number' value="{{product.Quantity}}" name="product_quantity" required></input>
+                <br>
+                <br>
+                <label>Units</label><br>
+                <select name="units" id="units">
+                    {% if product.Units == "Rs/Kg" %}
+                    <option selected value="Rs/Kg">Rupees/Kilogram</option>
+                    {% else %}
+                    <option value="Rs/Kg">Rupees/Kilogram</option>
+                    {% endif %}
+
+                    {% if product.Units == "Rs/Ltr" %}
+                    <option selected value="Rs/Ltr">Rupees/Litres</option>
+                    {% else %}
+                    <option value="Rs/Ltr">Rupees/Litres</option>
+                    {% endif %}
+
+                    {% if product.Units == "Rs/Dozen" %}
+                    <option selected value="Rs/Dozen">Rupees/Dozen</option>
+                    {% else %}
+                    <option value="Rs/Dozen">Rupees/Dozen</option>
+                    {% endif %}
+
+                    {% if product.Units == "Rs/Unit" %}
+                    <option selected value="Rs/Unit">Rupees/Unit</option>
+                    {% else %}
+                    <option value="Rs/Unit">Rupees/Unit</option>
+                    {% endif %}
+
+                </select>
+                <br>
+                <br>
+                <label>Expiry Date</label>
+                <br>
+                <input type='date' value={{product.ExpiryDate|string}} name="product_expirydate" required></input>
+                <br>
+                <br>
+                <label for='image'>Product Image</label>
+                <br>
+                <input type="file" name="product_image" accept="image/*" style="width: 210px;">
+                <br>
+                <br>
+                <input type="submit" class="checkout_btn" value="Submit">
+            </form>
+        </div>
+        <br>
+        <br>
+</body>
+
+</html>

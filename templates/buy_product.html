@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy {{product.Name}}</title>
+    <link href="/static/style.css" rel="stylesheet" />
+    <link rel="icon" type="image/ico" href="/static/logo.png">
+</head>
+
+<body>
+    <div align="center">
+        <div
+            style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+            <div style="display: flex;justify-content: center;align-items: center;">
+
+                <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+                    <img src="/static/logo.png" width="70px" height="70px">
+                </div>
+                <a href="/best_selling_products">
+                    <div style="width: 280px;margin-right: 10px;margin-left: 10px;">
+                        <img src="/static/gifs/D80650255_1242x350_A.gif" width="100%" height="auto"
+                            style="border-radius: 10px;">
+                    </div>
+                </a>
+
+                <a href="/home/user" class="btn">Home</a>
+                <a href="/cart" class="btn">Cart</a>
+                <a href="/user/account" class="btn">Account</a>
+
+            </div>
+
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <h2 style="margin-right: 15px;">{{user.Name}}</h2>
+                <a href="/logout" class="btn" style="border:solid 1px white">Log-Out</a>
+            </div>
+        </div>
+        <br>
+        <h2 style="margin: 5px;">Buy {{product.Name}}</h2>
+        <div style="display: flex;justify-content: center;align-items: center;">
+            <div align="center" class="product_section">
+                <img src={{product.Image}} class="product_image">
+                <div class="product_info">
+                    <p>Price: {{product.Price}} {{product.Units}}</p>
+                    <p>Expiry: {{(product.ExpiryDate|string).split()[0]}}</p>
+                </div>
+            </div>
+            <form class="form" method="POST" action="#">
+                <label for="address">Address</label>
+                <br>
+                <input type="text" name="address" required><br>
+                <br>
+                <label for="payment_method">Payment Method</label><br>
+                <select name="payment_method" id="payment_method">
+                    <option value="UPI">UPI</option>
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option selected value="Debit Card">Debit Card</option>
+                </select>
+                <br>
+                <br>
+                <label for="quantity">Quantity</label>
+                <br>
+                <input type="range" name="quantity" value="1" min="1" max={{product.Quantity}}
+                    style="outline: 2px solid white;" oninput="document.getElementById('display_total').innerHTML = 'Total Amount: Rs. '+{{product.Price}}*this.value;
+                document.getElementById('display_quantity').innerHTML = 'Quantity: '+this.value+' {{(product.Units|string).split('/')[1]}}';">
+                <h4 id="display_quantity" style="margin:5px;color: white;">Quantity: 1 {{(product.Units|string).split('/')[1]}}</h4>
+                <h4 id="display_total" style="margin: 5px;color: white;">Total Amount: Rs. {{product.Price}}</h4>
+                <br>
+                <input type="submit" class="checkout_btn" style="font-size: 18px;" value="Confirm Order">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>User Home</title>
+  <link href="/static/style.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" type="image/ico" href="/static/logo.png">
+</head>
+
+<body>
+
+  <div align="center">
+    <div
+      style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+      <div style="display: flex;justify-content: center;align-items: center;">
+
+        <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+          <img src="/static/logo.png" width="70px" height="70px">
+        </div>
+        <a href="/best_selling_products">
+          <div style="width: 280px;margin-right: 10px;margin-left: 10px;">
+            <img src="/static/gifs/D80650255_1242x350_A.gif" width="100%" height="auto" style="border-radius: 10px;">
+          </div>
+        </a>
+
+        <a class="active_btn">Home</a>
+        <a href="/cart" class="btn">Cart</a>
+        <a href="/user/account" class="btn">Account</a>
+
+        <form action="#" method="POST" style="margin-left: 10px;">
+          <div
+            style="display: flex;justify-content: center;align-items: center;background: rgba(0, 0, 0, 0.2);border: 1.5px solid white;border-radius: 10px;">
+            <img src="/static/icons/search.png" width="20px" height="20px" style="margin: 5px;">
+            <input type="text" autocomplete="off" name="search_keyword" placeholder="Search for groceries"
+              style="margin: 0px;border: none;background: none;text-align: left;outline: none;margin: 2px;border-radius: none;"
+              required>
+          </div>
+        </form>
+      </div>
+
+      <div style="display: flex;justify-content: center;align-items: center;">
+        <h2 style="margin-right: 15px;">{{user.Name}}</h2>
+        <a href="/logout" class="btn" style="border:solid 1px white">Log-Out</a>
+      </div>
+    </div>
+    <br>
+
+
+    <div class="home_carousel_container" id="carousel">
+      {% for i in range(5) %}
+      <div class="home_carousel_element" align="center">
+        <img src="/static/banners/Discount Banner.png"
+          style="width: 100%;height: 100%;object-fit: cover;object-position: center;">
+      </div>
+      <div class="home_carousel_element" align="center">
+        <img src="/static/banners/Fresh Banner.png" style="width: 100%;height: 100%;object-fit: cover;">
+      </div>
+      <div class="home_carousel_element" align="center">
+        <img src="/static/banners/Organic Banner.png" style="width: 100%;height: 100%;object-fit: cover;">
+      </div>
+      {%endfor%}
+    </div>
+
+
+
+    <h2>Shop by Categories</h2>
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <div style="display: flex;flex-direction: row;align-items: center;justify-content: start;overflow-x: auto;overflow-y: hidden;">
+        {% for category in category_dict %}
+        <div>
+          <a href="/product/page/{{category.Id}}">
+            <div style="margin: 10px;">
+              <img src="{{category.Image}}" class="cart_image"
+                style="width: 150px;height: 150px;border: 3px white solid;">
+              <br>
+              <span
+                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{category.Name}}</span>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+
+    <div align="center">
+
+      {% for category in category_dict %}
+      <div class="category_bar">
+        <a href="/product/page/{{category.Id}}">
+          <div class="category_bar_name">
+            <img class="category_image" src={{category.Image}} style="margin: 5px;">
+            <h2 style="color: rgb(36, 96, 75);margin: 5px;">{{category.Name}}</h2>
+          </div>
+        </a>
+        <div class="category_container">
+          {% for product in category_dict[category] %}
+          <table class="category_item" style="margin-bottom: 20px;">
+            <tr>
+              <td>
+                {{product.Name}}
+                <div>
+                  {{product.Price}}
+                  {{product.Units}}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="imagecontainer">
+                <a>
+                  <div class="image" style="background-image:url('{{product.Image}}');">
+                  </div>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display: flex;align-items: center;justify-content: space-between;">
+                  <a href="/addtocart/{{product.Id}}" style="margin: 7px;">
+                    <img src="/static/icons/cart.png" width="22px" height="22px">
+                  </a>
+                  <a href="/buy/{{product.Id}}" class="buy_btn">Buy Now</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+          {% endfor %}
+        </div>
+      </div>
+      <br>
+      {% endfor %}
+    </div>
+
+    <br>
+    <br>
+
+    {%for message in get_flashed_messages()%}
+    <div class="alert">
+      <span>{{message}}</span>
+    </div>
+    {%endfor%}
+
+  </div>
+</body>
+<script>
+  const carousel = document.getElementById('carousel')
+  var last_iter = null
+  setInterval(() => {
+    console.log(carousel.scrollLeft)
+    if (carousel.scrollLeft === last_iter) {
+      carousel.scrollLeft = 0
+      return
+    }
+    carousel.scrollTo({
+      left: carousel.scrollLeft + 1079.4285888671875,
+      behavior: 'smooth'
+    })
+    last_iter = carousel.scrollLeft
+  }, 5000)
+</script>
+
+
+</html>

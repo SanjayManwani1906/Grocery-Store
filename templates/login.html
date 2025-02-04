@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Welcome to your Grocery Store!</title>
+  <link href="/static/style.css" rel="stylesheet" />
+  <link rel="icon" type="image/ico" href="/static/logo.png">
+</head>
+
+<body>
+  <div align="center" >
+    <img src="/static/logo.png" width="150px" height="150px">
+    <div>
+      <a href="/create/user" class="btn" style="margin: 15px;">
+        New User? Sign-Up
+      </a>
+    </div>
+    <br>
+    <br>
+    <form action="#" method="POST" autocomplete="off" class="form">
+      <label for="username">Username</label>
+      <br>
+      <input type="text" name="username" required><br>
+      <br>
+      <label for="password">Password</label>
+      <br>
+      <input type="password" name="password" required><br>
+      <br>
+      <input type="submit" class="checkout_btn" style="font-size: 18px;" value="Log In">
+    </form>
+    <br>
+    {%for message in get_flashed_messages()%}
+    <div class="alert">
+      <span>{{message}}</span>
+    </div>
+    {%endfor%}
+  </div>
+  <br>
+</body>
+
+</html>

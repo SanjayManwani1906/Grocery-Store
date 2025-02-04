@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/style.css" rel="stylesheet" />
+    <title>Search</title>
+    <link rel="icon" type="image/ico" href="/static/logo.png">
+</head>
+
+<body>
+    <div align="center">
+        <div
+            style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+            <div style="display: flex;justify-content: center;align-items: center;">
+
+                <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+                    <img src="/static/logo.png" width="70px" height="70px">
+                </div>
+                <a href="/best_selling_products">
+                    <div style="width: 280px;margin-right: 10px;margin-left: 10px;">
+                        <img src="/static/gifs/D80650255_1242x350_A.gif" width="100%" height="auto"
+                            style="border-radius: 10px;">
+                    </div>
+                </a>
+
+                <a href="/home/user" class="btn">Home</a>
+                <a href="/cart" class="btn">Cart</a>
+                <a href="/user/account" class="btn">Account</a>
+            </div>
+
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <h2 style="margin-right: 15px;">{{user.Name}}</h2>
+                <a href="/logout" class="btn" style="border:solid 1px white">Log-Out</a>
+            </div>
+        </div>
+        <br>
+
+        <form action="/search" method="POST">
+            <div
+                style="width:fit-content ;display: flex;justify-content: center;align-items: center;background: rgba(0, 0, 0, 0.2);border: 1.5px solid white;border-radius: 10px;">
+                <img src="/static/icons/search.png" width="20px" height="20px" style="margin: 5px;">
+                <input type="text" autocomplete="off" name="search_keyword" placeholder="Search for groceries"
+                    style="margin: 0px;border: none;background: none;text-align: left;outline: none;margin: 2px;border-radius: none;"
+                    required>
+            </div>
+            <br>
+            <div style="display: flex;align-items: start;justify-content: center;">
+                <div style="width: fit-content;" align="center">
+                    <label>Order-By</label>
+                    <div align="left" style="background: rgba(0, 0, 0, 0.2);" class="radio_box">
+                        <input type="radio" name="order_by" value="price">
+                        <label for="order" class="radio_label">Price</label>
+                        <br>
+                        <input type="radio" name="order_by" value="expiry">
+                        <label for="expiry" class="radio_label">Expiry</label>
+                    </div>
+                </div>
+                <div style="width: fit-content;" align="center">
+                    <label>Order</label>
+                    <div align="left" style="background: rgba(0, 0, 0, 0.2);" class="radio_box">
+                        <input type="radio" name="order" value="ascending">
+                        <label for="ascending" class="radio_label">Ascending</label>
+                        <br>
+                        <input type="radio" name="order" value="descending">
+                        <label for="descending" class="radio_label">Descending</label>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Search" class="checkout_btn">
+        </form>
+    </div>
+    <br>
+
+    <div class="container">
+        {% for product in products %}
+        {% if product.Quantity>0 %}
+        <table class="item">
+            <tr>
+                <td>
+                    {{product.Name}}
+                    <div>
+                        {{product.Price}}
+                        {{product.Units}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="imagecontainer">
+                    <a>
+                        <div class="image" style="background-image:url('{{product.Image}}');">
+                        </div>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="display: flex;align-items: center;justify-content: space-between;">
+                        <a href="/addtocart/{{product.Id}}" style="margin: 7px;">
+                            <img src="/static/icons/cart.png" width="22px" height="22px">
+                        </a>
+                        <a href="/buy/{{product.Id}}" class="buy_btn">Buy Now</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        {%else%}
+        <table class="item" style="background-color: grey;">
+            <tr>
+                <td>
+                    {{product.Name}}
+                    <div>
+                        {{product.Price}}
+                        {{product.Units}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="imagecontainer">
+                    <a>
+                        <div class="image" style="background-image:url('{{product.Image}}');">
+                        </div>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 12px;padding-bottom: 12px">
+                    Out of Stock
+                </td>
+            </tr>
+        </table>
+        {%endif%}
+        {% endfor %}
+
+    </div>
+    <br>
+    <br>
+</body>
+
+</html>

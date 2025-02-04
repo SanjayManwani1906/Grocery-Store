@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>category page</title>
+  <link rel="icon" type="image/ico" href="/static/logo.png">
+  <link href="/static/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div align="center">
+
+    <div
+      style="display: flex;justify-content: space-between;align-items: center;background-color: rgba(255, 255, 255, 0.35);padding: 5px;">
+      <div style="display: flex;justify-content: center;align-items: center;">
+
+        <div style="background-color: rgb(79, 137, 122);border-radius: 10%;padding: 5px;margin-right: 10px;">
+          <img src="/static/logo.png" width="70px" height="70px">
+        </div>
+
+        <a href="/home/admin" class="btn">Home</a>
+        <a href="/admin/account" class="btn">Account</a>
+      </div>
+
+      <a href="/adminlogout" class="btn" style="border:solid 1px white">Log-Out</a>
+
+    </div>
+
+    <h2>Other Categories</h2>
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <div
+        style="display: flex;flex-direction: row;align-items: center;justify-content: start;overflow-x: auto;overflow-y: hidden;">
+        {% for other_category in categories %}
+        {% if other_category.Name == category.Name %}
+        <div>
+          <a href="/category/page/{{other_category.Id}}">
+            <div style="margin: 10px;">
+              <img src="{{other_category.Image}}" class="cart_image"
+                style="width: 70px;height: 70px;border: 5px rgb(36, 96, 75) solid;">
+              <br>
+              <span
+                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{other_category.Name}}</span>
+            </div>
+          </a>
+        </div>
+        {% else %}
+        <div>
+          <a href="/category/page/{{other_category.Id}}">
+            <div style="margin: 10px;">
+              <img src="{{other_category.Image}}" class="cart_image"
+                style="width: 70px;height: 70px;border: 2px white solid;">
+              <br>
+              <span
+                style="font-size: 20px;color: white;text-shadow: rgb(102, 102, 102) 3px 3px 10px;">{{other_category.Name}}</span>
+            </div>
+          </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+
+    <h2>Products in {{category.Name}}</h2>
+    <div class="container">
+      {% for product in products %}
+      {% if product.Quantity > 0 %}
+      <table class="item">
+        <tr>
+          <td>
+            {{product.Name}}
+          </td>
+        </tr>
+        <a href="/products/page">
+          <tr>
+            <td class="imagecontainer">
+              <div class="image" style="background-image:url('{{product.Image}}');">
+              </div>
+            </td>
+          </tr>
+        </a>
+        <tr>
+          <td>
+            <div style="display: flex;align-items: center;justify-content: space-between;">
+              <a href="/edit/product/{{product.Id}}" style="margin-left: 15px;padding: 5px;">
+                <img src="/static/icons/edit.png" width="22px" height="22px">
+              </a>
+              <a href="/delete/product/{{product.Id}}"
+                onclick="return confirm('Are you sure, you want to DELETE {{product.Name}} ?')"
+                style="margin-right: 15px;padding: 5px;">
+                <img src="/static/icons/bin.png" width="18px" height="22px">
+              </a>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      {% else %}
+
+      <table class="item" style="background-color: gray;">
+        <tr>
+          <td>
+            {{product.Name}}
+          </td>
+        </tr>
+        <a href="/products/page">
+          <tr>
+            <td class="imagecontainer">
+              <div class="image" style="background-image:url('{{product.Image}}');">
+              </div>
+            </td>
+          </tr>
+        </a>
+        <tr>
+          <td>
+            <div style="display: flex;align-items: center;justify-content: space-between;">
+              <a href="/edit/product/{{product.Id}}" style="margin-left: 15px;padding: 5px;">
+                <img src="/static/icons/edit.png" width="22px" height="22px">
+              </a>
+              <a href="/delete/product/{{product.Id}}"
+                onclick="return confirm('Are you sure, you want to DELETE {{product.Name}} ?')"
+                style="margin-right: 15px;padding: 5px;">
+                <img src="/static/icons/bin.png" width="18px" height="22px">
+              </a>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      {% endif %}
+
+      {% endfor %}
+
+      <a href="/create/product/{{category.Id}}">
+        <div style="margin: 15px;">
+          <img src="/static/icons/plus.png" width="80px" height="80px">
+        </div>
+      </a>
+
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+</body>
+
+</html>
